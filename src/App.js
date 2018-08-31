@@ -3,8 +3,8 @@ import './App.css';
 
 import { Provider } from 'react-redux';
 
-import AddInvoicePage from './components/addInvoicePage/addInvoiceLayout'
-import store from './redux/store'
+import AddInvoicePageContainer from './components/addInvoicePage/addInvoicePageContainer'
+import { store } from './redux/store'
 
 // Добавляем наш селект на страницу
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <AddInvoicePage />
+          <AddInvoicePageContainer />
         </Provider>
       </div>
     );
