@@ -38,7 +38,11 @@ interface InterfaceMySelect extends WithStyles<typeof styles> {
   label?: string,
   errorMsg?: string,
 }
-
+interface InterfaceProduct {
+  id?: number,
+  name?: string,
+  price?: string,
+}
 // Создание тупого функционального компонента, потому что нам не нужны state и жизненые циклы компонента реат.
 
 const MySelect = (props: InterfaceMySelect) => {
@@ -58,9 +62,13 @@ const MySelect = (props: InterfaceMySelect) => {
           <MenuItem value='' disabled>
             {placeholder}
           </MenuItem>
-          <MenuItem>one</MenuItem>
-          <MenuItem>two</MenuItem>
-          <MenuItem>three</MenuItem>
+          {values &&
+            values.map((elem: InterfaceProduct) => {
+              return (
+                <MenuItem key={elem.id}>{elem.name}</MenuItem>
+              )
+            })
+          }
           })}
         </Select>
         <FormHelperText error={errorMsg && errorMsg.length > 0} >{errorMsg}</FormHelperText>

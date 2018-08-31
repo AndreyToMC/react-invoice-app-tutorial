@@ -33,12 +33,12 @@ const styles = (theme) => createStyles({
 });
 
 interface InterfacePageLayout extends WithStyles<typeof styles> {
-
+  products: [],
 }
 
-function PageLayout(props: InterfacePageLayout) {
+const PageLayout = (props: InterfacePageLayout) => {
   const {
-    classes,
+    classes, products,
   } = props;
   return (
     <div className={classes.root}>
@@ -71,6 +71,7 @@ function PageLayout(props: InterfacePageLayout) {
                     <SelectInput
                       name='productInput'
                       placeholder='Add Product'
+                      values={products}
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -113,7 +114,7 @@ function PageLayout(props: InterfacePageLayout) {
         </Grid>
       </Paper>
     </div>
-);
-}
+  );
+};
 
 export default withStyles(styles)(PageLayout);
