@@ -67,6 +67,6 @@ const MySelect = (props: InterfaceMySelect) => {
       </FormControl>
     </div>
   );
-}
+};
 
 export default withStyles(styles)(MySelect);
