@@ -4,7 +4,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 
 import { store } from './redux/store'
-import AppRouter from './components/appRouting';
+import AppContainer from './components/appContainer';
 
 // Добавляем наш селект на страницу
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <AppRouter />
+          <AppContainer />
         </Provider>
       </div>
     );
