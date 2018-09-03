@@ -5,7 +5,7 @@ import { sendRequestObservable } from '../../../services/requestObservable'
 import { ofType } from 'redux-observable'
 import { map, switchMap } from 'rxjs/operators'
 
-import {ActionTypes, getProductsFulfilled} from '../actions/products.actions'
+import {ActionTypes, getProductsFulfilled} from '../actions'
 
 export const getProductsEpic = (action$) => action$.pipe(
   ofType(ActionTypes.GET_PRODUCTS),

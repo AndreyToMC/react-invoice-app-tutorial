@@ -3,18 +3,22 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
+import customers from './customers/reducers/customers.reducer';
 import products from './products/reducers/products.reducer';
 
 // Создание группы редюсеров
 const rootReducer = combineReducers({
   products,
+  customers,
 });
 
+import * as customersEpics from './customers/epics'
 import * as productsEpics from './products/epics/products.epics'
 
 // Создание группы эпиков
 const rootEpic = combineEpics(
   productsEpics.getProductsEpic,
+  customersEpics.getCustomersEpic,
 );
 
 const epicMiddleware = createEpicMiddleware();

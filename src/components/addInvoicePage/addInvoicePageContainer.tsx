@@ -5,11 +5,14 @@ import { bindActionCreators } from 'redux';
 
 import PageLayout from './addInvoiceLayout';
 
-import {getProducts} from '../../redux/products/actions/products.actions'
+import { getCustomers } from '../../redux/customers/actions'
+import { getProducts } from '../../redux/products/actions'
 // Интерфейс для props компонента
 interface ICreateInvoicePageProps {
   products: [],
+  customers: [],
   getProducts: () => void,
+  getCustomers: () => void,
 }
 
 // интерфейс для state компонента
@@ -41,7 +44,8 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
     };
   }
   componentDidMount() {
-    this.props.getProducts()
+    this.props.getProducts();
+    this.props.getCustomers();
   }
   // методы класса компонента
   onCustomerInputChange(e) {
@@ -94,11 +98,12 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
       invoiceItemsInputs,
     } = this.state;
     const {
-      products,
+      products, customers,
     } = this.props;
     return (
     <PageLayout
       products={products}
+      customers={customers}
     />
     );
   }
@@ -107,10 +112,12 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
 function mapStateToProps(state) {
   return {
     products: state.products.productsList,
+    customers: state.customers.customersList,
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
+    getCustomers: bindActionCreators(getCustomers, dispatch),
     getProducts: bindActionCreators(getProducts, dispatch),
   };
 }
