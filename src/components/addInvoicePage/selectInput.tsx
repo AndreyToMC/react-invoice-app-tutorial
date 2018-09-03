@@ -56,7 +56,7 @@ const MySelect = (props: InterfaceMySelect) => {
           value={selected || ''}
           onChange={onChange}
           displayEmpty
-          input={<Input name={name} id='asd' />}
+          input={<Input name={name} />}
           autoWidth
         >
           <MenuItem value='' disabled>
@@ -65,7 +65,7 @@ const MySelect = (props: InterfaceMySelect) => {
           {values &&
             values.map((elem: InterfaceProduct) => {
               return (
-                <MenuItem key={elem.id}>{elem.name}</MenuItem>
+                <MenuItem key={elem.id} value={elem.id}>{elem.name}</MenuItem>
               )
             })
           }

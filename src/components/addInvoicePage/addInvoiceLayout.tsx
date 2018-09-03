@@ -35,11 +35,37 @@ const styles = (theme) => createStyles({
 interface InterfacePageLayout extends WithStyles<typeof styles> {
   products: [],
   customers: [],
+  totalPrice: string,
+  customerInput: number,
+  invoiceItemsInputs: any[],
+  discountInput: number,
+  addQuantityInput: number,
+  onCustomerInputChange: (e: any) => void,
+  onAddProductInputChange: (e: any) => void,
+  onAddQuantityInputChange: (e: any) => void,
+  onDiscountInputChange: (e: any) => void,
+  onItemsListProductChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+  onItemsListQuantityChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
+  onSubmit: () => void,
 }
 
 const PageLayout = (props: InterfacePageLayout) => {
   const {
-    classes, products, customers,
+    classes,
+    products,
+    customers,
+    totalPrice,
+    customerInput,
+    onCustomerInputChange,
+    onAddProductInputChange,
+    onDiscountInputChange,
+    discountInput,
+    addQuantityInput,
+    onAddQuantityInputChange,
+    onItemsListProductChange,
+    onItemsListQuantityChange,
+    invoiceItemsInputs,
+    onSubmit,
   } = props;
   return (
     <div className={classes.root}>
@@ -58,6 +84,8 @@ const PageLayout = (props: InterfacePageLayout) => {
                       placeholder='Select customer'
                       label='Customer'
                       values={customers}
+                      selected={customerInput}
+                      onChange={onCustomerInputChange}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -69,16 +97,44 @@ const PageLayout = (props: InterfacePageLayout) => {
                   <Grid item xs={3}>
                     Price
                   </Grid>
+                  {invoiceItemsInputs && invoiceItemsInputs.length > 0 && invoiceItemsInputs.map((elem) => {
+                    return (
+                      <React.Fragment key={elem.id}>
+                        <Grid item xs={6}>
+                          <SelectInput
+                            name={`${elem.id}`}
+                            placeholder='Add Product'
+                            selected={elem.product_id}
+                            values={products}
+                            onChange={onItemsListProductChange}
+                          />
+                        </Grid>
+                        <Grid item xs={3}>
+                          <NumberInput
+                            name={`${elem.id}`}
+                            value={elem.quantity}
+                            onChange={onItemsListQuantityChange}
+                          />
+                        </Grid>
+                        <Grid item xs={3} className={classes.centered}>
+                          <p>${elem.productPriceTotal.length > 1 ? elem.productPriceTotal : '0.00'}</p>
+                        </Grid>
+                      </React.Fragment>
+                    )
+                  })}
                   <Grid item xs={6}>
                     <SelectInput
                       name='productInput'
                       placeholder='Add Product'
                       values={products}
+                      onChange={onAddProductInputChange}
                     />
                   </Grid>
                   <Grid item xs={3}>
                     <NumberInput
                       name='qtyInput'
+                      value={addQuantityInput}
+                      onChange={onAddQuantityInputChange}
                     />
                   </Grid>
                   <Grid item xs={3} className={classes.centered}>
@@ -91,7 +147,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                   </Grid>
                   <Grid item xs={6}>
                     <Typography className={classes.invoiceId} variant='title' gutterBottom>
-                      $0.00
+                      ${totalPrice}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -102,12 +158,16 @@ const PageLayout = (props: InterfacePageLayout) => {
                     Discount
                   </Typography>
                   <Grid item xs={12}>
-                    <NumberInput name='discountInput' />
+                    <NumberInput
+                      name='discountInput'
+                      onChange={onDiscountInputChange}
+                      value={discountInput}
+                    />
                   </Grid>
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Button variant='outlined' color='primary' className={classes.button}>
+                <Button variant='outlined' color='primary' className={classes.button} onClick={onSubmit}>
                   Send Invoice
                 </Button>
               </Grid>
