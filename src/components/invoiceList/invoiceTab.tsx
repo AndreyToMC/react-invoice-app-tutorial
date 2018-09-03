@@ -12,7 +12,6 @@ import TableRow from '@material-ui/core/TableRow';
 const styles = (theme) => createStyles({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     minWidth: 700,
   },

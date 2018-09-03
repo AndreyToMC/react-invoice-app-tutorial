@@ -196,10 +196,11 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
       invoiceItemsInputs, customerInput, discountInput, addInput, totalPrice,
     } = this.state;
     const {
-      products, customers,
+      products, customers, invoiceId,
     } = this.props;
     return (
     <PageLayout
+      invoiceId={invoiceId}
       totalPrice={totalPrice}
       customerInput={customerInput}
       discountInput={discountInput}
@@ -224,7 +225,7 @@ function mapStateToProps(state) {
     products: state.products.productsList,
     customers: state.customers.customersList,
     productsPriceById: state.products.productsPriceById,
-    invoiceId: state.invoices.invoicesList.slice(-1).shift() && state.invoices.invoicesList.slice(-1).shift().id + 1,
+    invoiceId: state.invoices.invoicesList.slice(-1).shift() && state.invoices.invoicesList.slice(-1).shift().id + 1 || 1,
   };
 }
 function mapDispatchToProps(dispatch) {

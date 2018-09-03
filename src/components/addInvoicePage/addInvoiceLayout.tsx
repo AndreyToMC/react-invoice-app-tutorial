@@ -33,6 +33,7 @@ const styles = (theme) => createStyles({
 });
 
 interface InterfacePageLayout extends WithStyles<typeof styles> {
+  invoiceId: number,
   products: [],
   customers: [],
   totalPrice: string,
@@ -66,115 +67,114 @@ const PageLayout = (props: InterfacePageLayout) => {
     onItemsListQuantityChange,
     invoiceItemsInputs,
     onSubmit,
+    invoiceId,
   } = props;
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography className={classes.invoiceId} variant='title' gutterBottom>
-                  Invoice Id
-                </Typography>
-                <Grid container >
-                  <Grid item xs={12} >
-                    <SelectInput
-                      name='customerInput'
-                      placeholder='Select customer'
-                      label='Customer'
-                      values={customers}
-                      selected={customerInput}
-                      onChange={onCustomerInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    Products
-                  </Grid>
-                  <Grid item xs={3}>
-                    Qantity
-                  </Grid>
-                  <Grid item xs={3}>
-                    Price
-                  </Grid>
-                  {invoiceItemsInputs && invoiceItemsInputs.length > 0 && invoiceItemsInputs.map((elem) => {
-                    return (
-                      <React.Fragment key={elem.id}>
-                        <Grid item xs={6}>
-                          <SelectInput
-                            name={`${elem.id}`}
-                            placeholder='Add Product'
-                            selected={elem.product_id}
-                            values={products}
-                            onChange={onItemsListProductChange}
-                          />
-                        </Grid>
-                        <Grid item xs={3}>
-                          <NumberInput
-                            name={`${elem.id}`}
-                            value={elem.quantity}
-                            onChange={onItemsListQuantityChange}
-                          />
-                        </Grid>
-                        <Grid item xs={3} className={classes.centered}>
-                          <p>${elem.productPriceTotal.length > 1 ? elem.productPriceTotal : '0.00'}</p>
-                        </Grid>
-                      </React.Fragment>
-                    )
-                  })}
-                  <Grid item xs={6}>
-                    <SelectInput
-                      name='productInput'
-                      placeholder='Add Product'
-                      values={products}
-                      onChange={onAddProductInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <NumberInput
-                      name='qtyInput'
-                      value={addQuantityInput}
-                      onChange={onAddQuantityInputChange}
-                    />
-                  </Grid>
-                  <Grid item xs={3} className={classes.centered}>
-                    <p>$0.00</p>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography className={classes.invoiceId} variant='title' gutterBottom>
-                      Total
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography className={classes.invoiceId} variant='title' gutterBottom>
-                      ${totalPrice}
-                    </Typography>
-                  </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={8}>
+              <Typography className={classes.invoiceId} variant='title' gutterBottom>
+                Invoice #{invoiceId}
+              </Typography>
+              <Grid container >
+                <Grid item xs={12} >
+                  <SelectInput
+                    name='customerInput'
+                    placeholder='Select customer'
+                    label='Customer'
+                    values={customers}
+                    selected={customerInput}
+                    onChange={onCustomerInputChange}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  Products
+                </Grid>
+                <Grid item xs={3}>
+                  Qantity
+                </Grid>
+                <Grid item xs={3}>
+                  Price
+                </Grid>
+                {invoiceItemsInputs && invoiceItemsInputs.length > 0 && invoiceItemsInputs.map((elem) => {
+                  return (
+                    <React.Fragment key={elem.id}>
+                      <Grid item xs={6}>
+                        <SelectInput
+                          name={`${elem.id}`}
+                          placeholder='Add Product'
+                          selected={elem.product_id}
+                          values={products}
+                          onChange={onItemsListProductChange}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <NumberInput
+                          name={`${elem.id}`}
+                          value={elem.quantity}
+                          onChange={onItemsListQuantityChange}
+                        />
+                      </Grid>
+                      <Grid item xs={3} className={classes.centered}>
+                        <p>${elem.productPriceTotal.length > 1 ? elem.productPriceTotal : '0.00'}</p>
+                      </Grid>
+                    </React.Fragment>
+                  )
+                })}
+                <Grid item xs={6}>
+                  <SelectInput
+                    name='productInput'
+                    placeholder='Add Product'
+                    values={products}
+                    onChange={onAddProductInputChange}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <NumberInput
+                    name='qtyInput'
+                    value={addQuantityInput}
+                    onChange={onAddQuantityInputChange}
+                  />
+                </Grid>
+                <Grid item xs={3} className={classes.centered}>
+                  <p>$0.00</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography className={classes.invoiceId} variant='title' gutterBottom>
+                    Total
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography className={classes.invoiceId} variant='title' gutterBottom>
+                    ${totalPrice}
+                  </Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={4} className={classes.centered}>
-                <div>
-                  <Typography variant='subheading' gutterBottom>
-                    Discount
-                  </Typography>
-                  <Grid item xs={12}>
-                    <NumberInput
-                      name='discountInput'
-                      onChange={onDiscountInputChange}
-                      value={discountInput}
-                    />
-                  </Grid>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant='outlined' color='primary' className={classes.button} onClick={onSubmit}>
-                  Send Invoice
-                </Button>
-              </Grid>
+            </Grid>
+            <Grid item xs={4} className={classes.centered}>
+              <div>
+                <Typography variant='subheading' gutterBottom>
+                  Discount
+                </Typography>
+                <Grid item xs={12}>
+                  <NumberInput
+                    name='discountInput'
+                    onChange={onDiscountInputChange}
+                    value={discountInput}
+                  />
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant='outlined' color='primary' className={classes.button} onClick={onSubmit}>
+                Send Invoice
+              </Button>
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </Grid>
     </div>
   );
 };

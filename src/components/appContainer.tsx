@@ -23,7 +23,7 @@ class AppContainer extends React.Component<IAppContainer> {
 
   render() {
     return (
-      <AppRouter />
+        <AppRouter />
     );
   }
 }

@@ -18,11 +18,13 @@ class AppRouter extends React.Component {
       <ConnectedRouter history={history}>
           <div>
             <Header />
+            <div style={{height: '80vh', overflowX: 'auto', paddingLeft: '10%', paddingRight: '10%', paddingTop: 20}}>
             <Route exact={true} path='/' component={MainPageContainer} />
             <Route exact={true} path='/invoices' component={InvoicePageContainer} />
             <Route path='/add_invoice' component={AddInvoicePage} />
             <Route path='/products' component={ProductsPageContainer} />
             <Route path='/customers' component={CustomersPageContainer} />
+            </div>
           </div>
       </ConnectedRouter>
     );
