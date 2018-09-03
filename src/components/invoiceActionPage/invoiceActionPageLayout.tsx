@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import Button from '@material-ui/core/Button/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import {createStyles, WithStyles, withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -40,14 +39,16 @@ interface InterfacePageLayout extends WithStyles<typeof styles> {
   customerInput: number,
   invoiceItemsInputs: any[],
   discountInput: number,
+  discountDisable?: boolean,
   addQuantityInput: number,
   onCustomerInputChange: (e: any) => void,
   onAddProductInputChange: (e: any) => void,
   onAddQuantityInputChange: (e: any) => void,
-  onDiscountInputChange: (e: any) => void,
+  onDiscountInputChange?: (e: any) => void,
   onItemsListProductChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
   onItemsListQuantityChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
-  onSubmit: () => void,
+  getProductPrice: (product_id: number, quantity: number) => void,
+  onSubmit?: () => void,
 }
 
 const PageLayout = (props: InterfacePageLayout) => {
@@ -61,6 +62,7 @@ const PageLayout = (props: InterfacePageLayout) => {
     onAddProductInputChange,
     onDiscountInputChange,
     discountInput,
+    discountDisable,
     addQuantityInput,
     onAddQuantityInputChange,
     onItemsListProductChange,
@@ -68,6 +70,7 @@ const PageLayout = (props: InterfacePageLayout) => {
     invoiceItemsInputs,
     onSubmit,
     invoiceId,
+    getProductPrice,
   } = props;
   return (
     <div className={classes.root}>
@@ -118,7 +121,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                         />
                       </Grid>
                       <Grid item xs={3} className={classes.centered}>
-                        <p>${elem.productPriceTotal.length > 1 ? elem.productPriceTotal : '0.00'}</p>
+                        <p>${getProductPrice(elem.product_id, elem.quantity) || '0.00'}</p>
                       </Grid>
                     </React.Fragment>
                   )
@@ -163,6 +166,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                     name='discountInput'
                     onChange={onDiscountInputChange}
                     value={discountInput}
+                    disabled={discountDisable}
                   />
                 </Grid>
               </div>

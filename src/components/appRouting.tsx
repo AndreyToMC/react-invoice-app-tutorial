@@ -3,8 +3,9 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-import AddInvoicePage from './addInvoicePage/addInvoicePageContainer'
+import AddInvoicePage from './addInvoicePageContainer'
 import CustomersPageContainer from './customersPage/customersPageContainer'
+import EditInvoicePageContainer from './editInvoicePageContainer'
 import InvoicePageContainer from './invoiceList/invoicePageContainer'
 import MainPageContainer from './invoiceList/mainPageContainer'
 import ProductsPageContainer from './productsPage/productsPageContainer'
@@ -25,6 +26,7 @@ class AppRouter extends React.Component {
             <Route path='/add_invoice' component={AddInvoicePage} />
             <Route path='/products' component={ProductsPageContainer} />
             <Route path='/customers' component={CustomersPageContainer} />
+            <Route path='/invoices_edit/:id' component={EditInvoicePageContainer} />
             <Route path='/invoices/:id' component={ViewInvoicePageContainer} />
           </div>
         </div>

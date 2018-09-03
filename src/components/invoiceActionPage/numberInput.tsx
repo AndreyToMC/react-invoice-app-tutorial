@@ -43,7 +43,7 @@ const NumberInput = (props: InterfaceNumberInput) => {
           type='number'
           name={name}
           onChange={onChange}
-          value={value}
+          value={value || 0}
         />
         <FormHelperText error={errorMsg && errorMsg.length > 0} >{errorMsg}</FormHelperText>
       </FormControl>

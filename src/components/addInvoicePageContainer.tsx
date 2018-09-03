@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import { sendInvoices } from '../../redux/invoices/actions';
-import PageLayout from './addInvoiceLayout';
+import { sendInvoices } from '../redux/invoices/actions';
+import PageLayout from './invoiceActionPage/invoiceActionPageLayout';
 
 interface ICreateInvoicePageProps {
   invoiceId: number,
@@ -215,6 +215,7 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
       onItemsListProductChange={this.onItemsListProductChange}
       onItemsListQuantityChange={this.onItemsListQuantityChange}
       onSubmit={this.onSubmit}
+      getProductPrice={this.getProductPrice}
     />
     );
   }
