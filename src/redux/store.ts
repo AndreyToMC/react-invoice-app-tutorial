@@ -6,22 +6,37 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import history from '../history';
 
 import customers from './customers/reducers/customers.reducer';
+import invoiceItems from './invoiceItems/reducers/invoiceItems.reducer';
+import invoices from './invoices/reducers/invoices.reducer';
 import products from './products/reducers/products.reducer';
 
 // Создание группы редюсеров
 const rootReducer = combineReducers({
   products,
   customers,
+  invoiceItems,
+  invoices,
   routing: routerReducer,
 });
 
 import * as customersEpics from './customers/epics'
-import * as productsEpics from './products/epics/products.epics'
+import * as invoiceItemsEpics from './invoiceItems/epics'
+import * as invoiceEpics from './invoices/epics'
+import * as productsEpics from './products/epics'
 
 // Создание группы эпиков
 const rootEpic = combineEpics(
   productsEpics.getProductsEpic,
   customersEpics.getCustomersEpic,
+  invoiceItemsEpics.getInvoicesItemsEpic,
+  invoiceItemsEpics.addInvoicesItemsEpic,
+  invoiceItemsEpics.changeInvoicesItemEpic,
+  invoiceItemsEpics.deleteInvoicesItemEpic,
+  invoiceEpics.getInvoicesEpic,
+  invoiceEpics.getInvoiceByIdEpic,
+  invoiceEpics.sendInvoicesEpic,
+  invoiceEpics.changeInvoiceEpic,
+  invoiceEpics.deleteInvoiceEpic,
 );
 
 const epicMiddleware = createEpicMiddleware();
