@@ -1,7 +1,9 @@
-
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
+
+import history from '../history';
 
 import customers from './customers/reducers/customers.reducer';
 import products from './products/reducers/products.reducer';
@@ -10,6 +12,7 @@ import products from './products/reducers/products.reducer';
 const rootReducer = combineReducers({
   products,
   customers,
+  routing: routerReducer,
 });
 
 import * as customersEpics from './customers/epics'
@@ -32,6 +35,7 @@ function createMyStore() {
       // Подключение используемых мидлвееров, тут может быть подключен так же Redux-thunk или Redux-promises для работы с асинхронным кодом
       applyMiddleware(
         epicMiddleware,
+        routerMiddleware(history),
       ),
     ),
   );
