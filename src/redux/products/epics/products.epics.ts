@@ -1,7 +1,8 @@
 import {apiUrl} from '../../../consts/apiUrl'
+import { normalizeData } from '../../../services/normalizeData'
+import { sendRequestObservable } from '../../../services/requestObservable'
 
 import { ofType } from 'redux-observable'
-import { ajax } from 'rxjs/ajax';
 import { map, switchMap } from 'rxjs/operators'
 
 import {ActionTypes, getProductsFulfilled} from '../actions/products.actions'
@@ -9,8 +10,15 @@ import {ActionTypes, getProductsFulfilled} from '../actions/products.actions'
 export const getProductsEpic = (action$) => action$.pipe(
   ofType(ActionTypes.GET_PRODUCTS),
   switchMap(() =>
-    ajax.get(apiUrl + `/api/products`).pipe(
-      map((res: any) => getProductsFulfilled(res.response)),
+    // отправка через общую функцию для запросов
+    sendRequestObservable('get', `/api/products`).pipe(
+      // создание двух обьектов с полями id и name, id и price
+      map((response) => normalizeData(response, ['name', 'price'])),
+      map((data: any) => getProductsFulfilled({
+        productsList: data.arr,
+        productsPriceById: data.objByType.price,
+        productsNameById: data.objByType.name,
+      })),
     ),
   ),
 );
