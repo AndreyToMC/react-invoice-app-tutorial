@@ -32,7 +32,7 @@ function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {invoices.length && invoices.map((elem) => {
+          {!!invoices.length && invoices.map((elem) => {
             return (
               <TableRow id={elem.id} key={elem.id}>
                 <TableCell component='th' scope='row'>

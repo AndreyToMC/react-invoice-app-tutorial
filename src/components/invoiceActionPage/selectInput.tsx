@@ -43,7 +43,7 @@ interface InterfaceProduct {
   name?: string,
   price?: string,
 }
-// Создание тупого функционального компонента, потому что нам не нужны state и жизненые циклы компонента реат.
+// Создание тупого функционального компонента, потому что нам не нужны states и жизненые циклы компонента реат.
 
 const MySelect = (props: InterfaceMySelect) => {
   const { classes, name, values, selected, onChange, placeholder, id, label, errorMsg } = props;

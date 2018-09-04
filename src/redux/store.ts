@@ -9,13 +9,14 @@ import customers from './customers/reducers/customers.reducer';
 import invoiceItems from './invoiceItems/reducers/invoiceItems.reducer';
 import invoices from './invoices/reducers/invoices.reducer';
 import products from './products/reducers/products.reducer';
+import {reducer} from './requests/nested-sates/products/reducers'
 
-// Создание группы редюсеров
 const rootReducer = combineReducers({
   products,
   customers,
   invoiceItems,
   invoices,
+  reducer,
   routing: routerReducer,
 });
 
@@ -23,10 +24,11 @@ import * as customersEpics from './customers/epics'
 import * as invoiceItemsEpics from './invoiceItems/epics'
 import * as invoiceEpics from './invoices/epics'
 import * as productsEpics from './products/epics'
+import * as requestProductEpics from './requests/nested-sates/products/epics'
 
-// Создание группы эпиков
 const rootEpic = combineEpics(
   productsEpics.getProductsEpic,
+  productsEpics.setProductsEpic,
   customersEpics.getCustomersEpic,
   invoiceItemsEpics.getInvoicesItemsEpic,
   invoiceItemsEpics.addInvoicesItemsEpic,
@@ -37,17 +39,15 @@ const rootEpic = combineEpics(
   invoiceEpics.sendInvoicesEpic,
   invoiceEpics.changeInvoiceEpic,
   invoiceEpics.deleteInvoiceEpic,
+  requestProductEpics.productsGetEpic,
 );
 
 const epicMiddleware = createEpicMiddleware();
 
-// Создание стора приложения на основе наших редьюсеров
 function createMyStore() {
   const newStore = createStore(
     rootReducer,
-    // Вспомогательная функция, которая подключает инструмент разработчика для редакс
     composeWithDevTools(
-      // Подключение используемых мидлвееров, тут может быть подключен так же Redux-thunk или Redux-promises для работы с асинхронным кодом
       applyMiddleware(
         epicMiddleware,
         routerMiddleware(history),
