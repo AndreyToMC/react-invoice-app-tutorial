@@ -49,6 +49,11 @@ interface InterfacePageLayout extends WithStyles<typeof styles> {
   onItemsListQuantityChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   getProductPrice: (product_id: number, quantity: number) => void,
   onSubmit?: () => void,
+  errorMsg?: {
+    invoiceItems: string,
+    customerInput: string,
+    price: string,
+  }
 }
 
 const PageLayout = (props: InterfacePageLayout) => {
@@ -71,6 +76,7 @@ const PageLayout = (props: InterfacePageLayout) => {
     onSubmit,
     invoiceId,
     getProductPrice,
+    errorMsg,
   } = props;
   return (
     <div className={classes.root}>
@@ -90,6 +96,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                     values={customers}
                     selected={customerInput}
                     onChange={onCustomerInputChange}
+                    errorMsg={!!errorMsg && errorMsg.customerInput}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -118,6 +125,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                           name={`${elem.id}`}
                           value={elem.quantity}
                           onChange={onItemsListQuantityChange}
+                          errorMsg={!!errorMsg && errorMsg.price}
                         />
                       </Grid>
                       <Grid item xs={3} className={classes.centered}>
@@ -132,6 +140,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                     placeholder='Add Product'
                     values={products}
                     onChange={onAddProductInputChange}
+                    errorMsg={!!errorMsg && errorMsg.invoiceItems}
                   />
                 </Grid>
                 <Grid item xs={3}>
@@ -139,6 +148,7 @@ const PageLayout = (props: InterfacePageLayout) => {
                     name='qtyInput'
                     value={addQuantityInput}
                     onChange={onAddQuantityInputChange}
+                    errorMsg={!!errorMsg && errorMsg.price}
                   />
                 </Grid>
                 <Grid item xs={3} className={classes.centered}>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-// Импорт необходимых элементов из Material Ui
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
@@ -9,8 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 
-// Прописываем классы стилей для нашего компонента,
-// особое внимание стоит уделить createStyles - вспомогательная функция для правил стиля (С), необходима для работы под тайпскриптом
 const styles = (theme) => createStyles({
   root: {
     display: 'flex',
@@ -25,9 +22,7 @@ const styles = (theme) => createStyles({
     marginTop: theme.spacing.unit * 2,
   },
 });
-// Прописываем интерфейсы для класса
-// Вполне возможно Тайпскрипт ругается на то, что интерфейсы должен быть с заглавной буквы i, ну пусть будет так...
-// Так же наследуем интерфейс стилей от material Ui
+
 interface InterfaceMySelect extends WithStyles<typeof styles> {
   name?: string,
   values?: [],
@@ -43,7 +38,6 @@ interface InterfaceProduct {
   name?: string,
   price?: string,
 }
-// Создание тупого функционального компонента, потому что нам не нужны states и жизненые циклы компонента реат.
 
 const MySelect = (props: InterfaceMySelect) => {
   const { classes, name, values, selected, onChange, placeholder, id, label, errorMsg } = props;
@@ -52,7 +46,7 @@ const MySelect = (props: InterfaceMySelect) => {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor={id} >{label}</InputLabel>
         <Select
-          error={errorMsg && errorMsg.length > 0}
+          error={!!errorMsg && errorMsg.length > 0}
           value={selected || ''}
           onChange={onChange}
           displayEmpty
@@ -71,7 +65,7 @@ const MySelect = (props: InterfaceMySelect) => {
           }
           })}
         </Select>
-        <FormHelperText error={errorMsg && errorMsg.length > 0} >{errorMsg}</FormHelperText>
+        <FormHelperText error={!!errorMsg && errorMsg.length > 0} >{errorMsg}</FormHelperText>
       </FormControl>
     </div>
   );

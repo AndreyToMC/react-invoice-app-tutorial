@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 
-import { addInvoicesItems, changeInvoicesItem,  getInvoicesItems  } from '../redux/invoiceItems/actions';
+import { addInvoicesItems, changeInvoicesItem, deleteInvoicesItem, getInvoicesItems  } from '../redux/invoiceItems/actions';
 import { changeInvoice, getInvoiceById  } from '../redux/invoices/actions';
 import PageLayout from './invoiceActionPage/invoiceActionPageLayout';
 
@@ -23,6 +23,7 @@ interface ICreateInvoicePageProps {
   changeInvoice: (id: number, data: InterfaceInvoice) => void,
   addInvoicesItems: (id: number, data: InvoiceItem) => void,
   changeInvoicesItem: (invoiceId: number, data: InvoiceItem, priduct_id: number) => void,
+  deleteInvoicesItem: (invoiceId: number, itemId: number) => void,
 }
 
 interface ICreateInvoicePageState {
@@ -224,7 +225,7 @@ function mapDispatchToProps(dispatch) {
     changeInvoicesItem: bindActionCreators(changeInvoicesItem, dispatch),
     addInvoicesItems: bindActionCreators(addInvoicesItems, dispatch),
     changeInvoice: bindActionCreators(changeInvoice, dispatch),
-
+    deleteInvoicesItem: bindActionCreators(deleteInvoicesItem, dispatch),
   };
 }
 export default connect(

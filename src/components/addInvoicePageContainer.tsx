@@ -32,6 +32,12 @@ interface ICreateInvoicePageState {
   discountInput: number,
 }
 
+interface InterfaceErrorMsg {
+  invoiceItems: string,
+  customerInput: string,
+  price: string,
+}
+
 interface InvoiceItem {
   id?: number,
   product_id?: number,
@@ -92,7 +98,12 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
 
   onCustomerInputChange(e) {
     const customerId = e.target.value;
-    this.setState({customerInput: customerId});
+    this.setState((prevState) => {
+      const newState = {...prevState};
+      newState.errorMsg.customerInput = '';
+      newState.customerInput = customerId;
+      return newState;
+    });
   }
 
   onAddProductInputChange(e) {
@@ -109,6 +120,7 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
         productPriceTotal: `${productPriceTotal}`,
       });
       newState.addInput.qtyInput = 0;
+      newState.errorMsg.invoiceItems = '';
       newState.totalPrice = this.getTotalPrice(newState, null);
       return newState;
     });
@@ -188,18 +200,21 @@ class AddInvoicePageContainer extends React.Component<ICreateInvoicePageProps, I
       });
       return
     }
-    this.props.sendInvoices({customer_id: customerInput, discount: discountInput, total: totalPrice}, invoiceItemsInputs)
+    let correctInvoiceItems = [...invoiceItemsInputs];
+    correctInvoiceItems = correctInvoiceItems.filter((elem) => !!elem.quantity);
+    this.props.sendInvoices({customer_id: customerInput, discount: discountInput, total: totalPrice}, correctInvoiceItems)
   }
 
   render() {
     const {
-      invoiceItemsInputs, customerInput, discountInput, addInput, totalPrice,
+      invoiceItemsInputs, customerInput, discountInput, addInput, totalPrice, errorMsg,
     } = this.state;
     const {
       products, customers, invoiceId,
     } = this.props;
     return (
     <PageLayout
+      errorMsg={errorMsg}
       invoiceId={invoiceId}
       totalPrice={totalPrice}
       customerInput={customerInput}

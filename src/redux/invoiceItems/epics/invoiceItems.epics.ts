@@ -2,7 +2,7 @@
 import { sendRequestObservable } from '../../../services/requestObservable'
 
 import { ofType } from 'redux-observable'
-import { map, switchMap } from 'rxjs/operators'
+import {map, switchMap} from 'rxjs/operators'
 
 import {
   ActionTypes,
@@ -41,13 +41,13 @@ export const addInvoicesItemsEpic = (action$) => action$.pipe(
       {...action.payload.data},
     ).pipe(
       map((response: ItemRes) => {
-        const product_id = parseInt(response.product_id, 10)
+        const product_id = parseInt(response.product_id, 10);
         const item = {
           id: response.id,
           invoice_id: response.invoice_id,
           product_id,
           quantity: response.quantity,
-        }
+        };
         return addInvoicesItemsFulfilled(item)
       }),
     ),
