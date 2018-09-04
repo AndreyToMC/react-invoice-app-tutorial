@@ -9,14 +9,14 @@ import customers from './customers/reducers/customers.reducer';
 import invoiceItems from './invoiceItems/reducers/invoiceItems.reducer';
 import invoices from './invoices/reducers/invoices.reducer';
 import products from './products/reducers/products.reducer';
-import {reducer} from './requests/nested-sates/products/reducers'
+import {productsRequests} from './requests/nested-sates/products/reducers'
 
 const rootReducer = combineReducers({
   products,
   customers,
   invoiceItems,
   invoices,
-  reducer,
+  productsRequests,
   routing: routerReducer,
 });
 

@@ -5,7 +5,7 @@ import { apiUrl } from '../consts/apiUrl';
 
 export function getProducts() {
   return ajax({
-    url: apiUrl + '/api/products',
+    url: apiUrl + '/api/products/155',
     method: 'get',
   }).pipe(
     map((res) => res),
